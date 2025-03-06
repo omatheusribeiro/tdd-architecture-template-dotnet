@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35825.156 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tdd-architecture-template-dotnet.Api", "tdd-architecture-template-dotnet\tdd-architecture-template-dotnet.Api.csproj", "{BE0896CE-D8C6-4727-AA12-21A0C860F5EC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BE0896CE-D8C6-4727-AA12-21A0C860F5EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE0896CE-D8C6-4727-AA12-21A0C860F5EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE0896CE-D8C6-4727-AA12-21A0C860F5EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE0896CE-D8C6-4727-AA12-21A0C860F5EC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9354E30F-379C-4236-BEB7-119D0B766013}
+	EndGlobalSection
+EndGlobal
