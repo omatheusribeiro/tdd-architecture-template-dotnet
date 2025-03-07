@@ -1,4 +1,5 @@
 ﻿using tdd_architecture_template_dotnet.Domain.Entities.Base;
+using tdd_architecture_template_dotnet.Domain.Entities.Sales;
 
 namespace tdd_architecture_template_dotnet.Domain.Entities.Products
 {
