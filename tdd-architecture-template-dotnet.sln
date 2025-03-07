@@ -1,9 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35825.156 d17.13
+VisualStudioVersion = 17.13.35825.156
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tdd-architecture-template-dotnet.Api", "tdd-architecture-template-dotnet\tdd-architecture-template-dotnet.Api.csproj", "{BE0896CE-D8C6-4727-AA12-21A0C860F5EC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tdd-architecture-template-dotnet.Api", "src\tdd-architecture-template-dotnet.Api\tdd-architecture-template-dotnet.Api.csproj", "{8336D35F-8B0D-6ECE-0B0F-D996FF064A6D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tdd-architecture-template-dotnet.Tests", "tests\tdd-architecture-template-dotnet.Tests\tdd-architecture-template-dotnet.Tests.csproj", "{C0F653EB-4153-4BD7-B984-EB47E1D7F21D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tdd-architecture-template-dotnet.Application", "src\tdd-architecture-template-dotnet.Application\tdd-architecture-template-dotnet.Application.csproj", "{A812E19A-1EC8-4669-9EA8-E94FB90AA6E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tdd-architecture-template-dotnet.Domain", "src\tdd-architecture-template-dotnet.Domain\tdd-architecture-template-dotnet.Domain.csproj", "{834873BE-E19F-4562-A3DC-92C8872B7332}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tdd-architecture-template-dotnet.Infrastructure", "src\tdd-architecture-template-dotnet.Infrastructure\tdd-architecture-template-dotnet.Infrastructure.csproj", "{2A262561-C68F-4265-9EA4-4263E5C9A17A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +19,26 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BE0896CE-D8C6-4727-AA12-21A0C860F5EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BE0896CE-D8C6-4727-AA12-21A0C860F5EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BE0896CE-D8C6-4727-AA12-21A0C860F5EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BE0896CE-D8C6-4727-AA12-21A0C860F5EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8336D35F-8B0D-6ECE-0B0F-D996FF064A6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8336D35F-8B0D-6ECE-0B0F-D996FF064A6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8336D35F-8B0D-6ECE-0B0F-D996FF064A6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8336D35F-8B0D-6ECE-0B0F-D996FF064A6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0F653EB-4153-4BD7-B984-EB47E1D7F21D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0F653EB-4153-4BD7-B984-EB47E1D7F21D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0F653EB-4153-4BD7-B984-EB47E1D7F21D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0F653EB-4153-4BD7-B984-EB47E1D7F21D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A812E19A-1EC8-4669-9EA8-E94FB90AA6E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A812E19A-1EC8-4669-9EA8-E94FB90AA6E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A812E19A-1EC8-4669-9EA8-E94FB90AA6E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A812E19A-1EC8-4669-9EA8-E94FB90AA6E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{834873BE-E19F-4562-A3DC-92C8872B7332}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{834873BE-E19F-4562-A3DC-92C8872B7332}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{834873BE-E19F-4562-A3DC-92C8872B7332}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{834873BE-E19F-4562-A3DC-92C8872B7332}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A262561-C68F-4265-9EA4-4263E5C9A17A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A262561-C68F-4265-9EA4-4263E5C9A17A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A262561-C68F-4265-9EA4-4263E5C9A17A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A262561-C68F-4265-9EA4-4263E5C9A17A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
