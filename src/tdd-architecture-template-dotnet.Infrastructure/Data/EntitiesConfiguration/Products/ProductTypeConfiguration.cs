@@ -4,9 +4,9 @@ using tdd_architecture_template_dotnet.Domain.Entities.Products;
 
 namespace tdd_architecture_template_dotnet.Infrastructure.Data.EntitiesConfiguration.Products
 {
-    public class ProductConfiguration : IEntityTypeConfiguration<Product>
+    public class ProductTypeConfiguration : IEntityTypeConfiguration<ProductType>
     {
-        public void Configure(EntityTypeBuilder<Product> builder)
+        public void Configure(EntityTypeBuilder<ProductType> builder)
         {
             builder.HasKey(x => x.Id);
 
@@ -18,32 +18,20 @@ namespace tdd_architecture_template_dotnet.Infrastructure.Data.EntitiesConfigura
 
             builder.Property(p => p.Description).IsRequired();
 
-            builder.Property(p => p.Value).IsRequired();
-
-            builder.Property(p => p.ProductTypeId).IsRequired();
-
             builder
-                .HasOne(u => u.Type)
-                .WithMany(u => u.Product)
-                .HasForeignKey(uc => uc.ProductTypeId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder
-                .HasMany(u => u.Sale)
-                .WithOne(a => a.Product)
-                .HasForeignKey(a => a.ProductId)
+                .HasMany(u => u.Product)
+                .WithOne(c => c.Type)
+                .HasForeignKey(c => c.ProductTypeId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasData(
-                new Product
+                new ProductType
                 {
                     Id = 1,
                     CreationDate = DateTime.UtcNow,
                     ChangeDate = null,
-                    Name = "Product test",
-                    Description = "Description for product test",
-                    Value = 100,
-                    ProductTypeId = 1,
+                    Name = "Product type test",
+                    Description = "Description for product type test",
                 });
         }
     }
