@@ -10,7 +10,6 @@
   <ItemGroup>
     <Folder Include="Repositories\Users\" />
     <Folder Include="Repositories\Sales\" />
-    <Folder Include="Repositories\Products\" />
     <Folder Include="Singleton\" />
   </ItemGroup>
 
