@@ -29,22 +29,22 @@ namespace tdd_architecture_template_dotnet.Infrastructure
 
             #region Users Repositories
 
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IUserAddressRepository, UserAddresRepository>();
-            services.AddScoped<IUserContactRepository, UserContactRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IUserAddressRepository, UserAddresRepository>();
+            services.AddTransient<IUserContactRepository, UserContactRepository>();
 
             #endregion
 
             #region Products Repositories
 
-            services.AddScoped<IProductRepository, ProductRepository>();
-            services.AddScoped<IProductTypeRepository, ProductTypeRepository>();
+            services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IProductTypeRepository, ProductTypeRepository>();
 
             #endregion
 
             #region Sale Repository
 
-            services.AddScoped<ISaleRepository, SaleRepository>();
+            services.AddTransient<ISaleRepository, SaleRepository>();
 
             #endregion
 
