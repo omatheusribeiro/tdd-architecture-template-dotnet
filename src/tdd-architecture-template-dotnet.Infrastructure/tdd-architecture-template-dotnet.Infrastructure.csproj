@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Singleton\" />
+    <Folder Include="Singleton\Log\" />
   </ItemGroup>
 
   <ItemGroup>
