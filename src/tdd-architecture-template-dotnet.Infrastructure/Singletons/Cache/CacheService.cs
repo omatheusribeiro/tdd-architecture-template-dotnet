@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
-using tdd_architecture_template_dotnet.Infrastructure.Singleton.Cache.Interfaces;
+using tdd_architecture_template_dotnet.Infrastructure.Singletons.Cache.Interfaces;
 
-namespace tdd_architecture_template_dotnet.Infrastructure.Singleton.Cache
+namespace tdd_architecture_template_dotnet.Infrastructure.Singletons.Cache
 {
     public class CacheService : ICacheService
     {

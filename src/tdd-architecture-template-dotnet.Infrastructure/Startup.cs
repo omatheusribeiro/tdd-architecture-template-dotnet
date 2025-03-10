@@ -9,10 +9,10 @@ using tdd_architecture_template_dotnet.Infrastructure.Data.Context;
 using tdd_architecture_template_dotnet.Infrastructure.Repositories.Products;
 using tdd_architecture_template_dotnet.Infrastructure.Repositories.Sales;
 using tdd_architecture_template_dotnet.Infrastructure.Repositories.Users;
-using tdd_architecture_template_dotnet.Infrastructure.Singleton.Cache;
-using tdd_architecture_template_dotnet.Infrastructure.Singleton.Cache.Interfaces;
-using tdd_architecture_template_dotnet.Infrastructure.Singleton.Logger;
-using tdd_architecture_template_dotnet.Infrastructure.Singleton.Logger.Interfaces;
+using tdd_architecture_template_dotnet.Infrastructure.Singletons.Cache;
+using tdd_architecture_template_dotnet.Infrastructure.Singletons.Cache.Interfaces;
+using tdd_architecture_template_dotnet.Infrastructure.Singletons.Logger;
+using tdd_architecture_template_dotnet.Infrastructure.Singletons.Logger.Interfaces;
 
 namespace tdd_architecture_template_dotnet.Infrastructure
 {

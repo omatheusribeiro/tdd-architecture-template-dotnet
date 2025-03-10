@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
-using tdd_architecture_template_dotnet.Infrastructure.Singleton.Logger.Interfaces;
+using tdd_architecture_template_dotnet.Infrastructure.Singletons.Logger.Interfaces;
 
-namespace tdd_architecture_template_dotnet.Infrastructure.Singleton.Logger
+namespace tdd_architecture_template_dotnet.Infrastructure.Singletons.Logger
 {
     public class LoggerService : ILoggerService
     {

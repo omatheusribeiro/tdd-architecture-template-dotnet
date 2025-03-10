@@ -1,4 +1,4 @@
-﻿namespace tdd_architecture_template_dotnet.Infrastructure.Singleton.Logger.Interfaces
+﻿namespace tdd_architecture_template_dotnet.Infrastructure.Singletons.Logger.Interfaces
 {
     public interface ILoggerService
     {

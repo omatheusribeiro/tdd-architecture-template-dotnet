@@ -1,4 +1,4 @@
-﻿namespace tdd_architecture_template_dotnet.Infrastructure.Singleton.Cache.Interfaces
+﻿namespace tdd_architecture_template_dotnet.Infrastructure.Singletons.Cache.Interfaces
 {
     public interface ICacheService
     {
