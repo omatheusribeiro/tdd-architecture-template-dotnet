@@ -10,7 +10,9 @@ using tdd_architecture_template_dotnet.Infrastructure.Repositories.Products;
 using tdd_architecture_template_dotnet.Infrastructure.Repositories.Sales;
 using tdd_architecture_template_dotnet.Infrastructure.Repositories.Users;
 using tdd_architecture_template_dotnet.Infrastructure.Singleton.Cache;
+using tdd_architecture_template_dotnet.Infrastructure.Singleton.Cache.Interfaces;
 using tdd_architecture_template_dotnet.Infrastructure.Singleton.Logger;
+using tdd_architecture_template_dotnet.Infrastructure.Singleton.Logger.Interfaces;
 
 namespace tdd_architecture_template_dotnet.Infrastructure
 {
@@ -50,8 +52,8 @@ namespace tdd_architecture_template_dotnet.Infrastructure
 
             #region Singletons
 
-            services.AddSingleton<CacheService>();
-            services.AddSingleton<LoggerService>();
+            services.AddSingleton<ICacheService, CacheService>();
+            services.AddSingleton<ILoggerService, LoggerService>();
 
             #endregion
 
