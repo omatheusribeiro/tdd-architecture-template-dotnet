@@ -1,8 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
+using tdd_architecture_template_dotnet.Infrastructure.Singleton.Logger.Interfaces;
 
 namespace tdd_architecture_template_dotnet.Infrastructure.Singleton.Logger
 {
-    public class LoggerService
+    public class LoggerService : ILoggerService
     {
         private readonly ILogger<LoggerService> _logger;
 
@@ -21,5 +22,4 @@ namespace tdd_architecture_template_dotnet.Infrastructure.Singleton.Logger
             _logger.LogError($"[ERROR] {DateTime.UtcNow}: {message}");
         }
     }
-
 }

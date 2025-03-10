@@ -1,8 +1,9 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
+using tdd_architecture_template_dotnet.Infrastructure.Singleton.Cache.Interfaces;
 
 namespace tdd_architecture_template_dotnet.Infrastructure.Singleton.Cache
 {
-    public class CacheService
+    public class CacheService : ICacheService
     {
         private readonly MemoryCache _cache;
 
@@ -22,5 +23,4 @@ namespace tdd_architecture_template_dotnet.Infrastructure.Singleton.Cache
             _cache.Set(key, value, expiration);
         }
     }
-
 }
