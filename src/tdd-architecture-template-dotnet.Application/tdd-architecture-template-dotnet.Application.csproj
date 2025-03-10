@@ -15,4 +15,9 @@
     <ProjectReference Include="..\tdd-architecture-template-dotnet.Infrastructure\tdd-architecture-template-dotnet.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ViewModels\Users\" />
+    <Folder Include="ViewModels\Sales\" />
+  </ItemGroup>
+
 </Project>
