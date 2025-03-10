@@ -9,6 +9,8 @@ using tdd_architecture_template_dotnet.Infrastructure.Data.Context;
 using tdd_architecture_template_dotnet.Infrastructure.Repositories.Products;
 using tdd_architecture_template_dotnet.Infrastructure.Repositories.Sales;
 using tdd_architecture_template_dotnet.Infrastructure.Repositories.Users;
+using tdd_architecture_template_dotnet.Infrastructure.Singleton.Cache;
+using tdd_architecture_template_dotnet.Infrastructure.Singleton.Logger;
 
 namespace tdd_architecture_template_dotnet.Infrastructure
 {
@@ -43,6 +45,13 @@ namespace tdd_architecture_template_dotnet.Infrastructure
             #region Sale Repository
 
             services.AddScoped<ISaleRepository, SaleRepository>();
+
+            #endregion
+
+            #region Singletons
+
+            services.AddSingleton<CacheService>();
+            services.AddSingleton<LoggerService>();
 
             #endregion
 
