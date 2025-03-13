@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 namespace tdd_architecture_template_dotnet.Application.ViewModels.Products
 {
     public class ProductViewModel
-    {
+    { 
         [JsonPropertyName("id")]
         public int Id { get; set; }
 
