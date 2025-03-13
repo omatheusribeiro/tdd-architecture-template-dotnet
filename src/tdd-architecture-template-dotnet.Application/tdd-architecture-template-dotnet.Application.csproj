@@ -15,4 +15,10 @@
     <ProjectReference Include="..\tdd-architecture-template-dotnet.Infrastructure\tdd-architecture-template-dotnet.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\Users\" />
+    <Folder Include="Services\Sales\" />
+    <Folder Include="Services\Products\" />
+  </ItemGroup>
+
 </Project>
