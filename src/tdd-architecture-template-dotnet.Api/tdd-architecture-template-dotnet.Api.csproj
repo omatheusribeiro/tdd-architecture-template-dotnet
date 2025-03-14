@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <Folder Include="Controllers\V1\Users\" />
-    <Folder Include="Controllers\V1\Sales\" />
   </ItemGroup>
 
 </Project>
