@@ -1,13 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using tdd_architecture_template_dotnet.Domain.Entities.Products;
 using tdd_architecture_template_dotnet.Domain.Entities.Users;
 using tdd_architecture_template_dotnet.Infrastructure.Data.Context;
-using tdd_architecture_template_dotnet.Infrastructure.Repositories.Products;
 using tdd_architecture_template_dotnet.Infrastructure.Repositories.Users;
 
 namespace tdd_architecture_template_dotnet.Tests.Repositories.Users

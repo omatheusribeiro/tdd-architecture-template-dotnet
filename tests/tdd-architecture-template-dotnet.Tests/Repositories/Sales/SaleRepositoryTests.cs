@@ -21,6 +21,7 @@ namespace tdd_architecture_template_dotnet.Tests.Repositories.Sales
         [Fact]
         public async Task GetById_ShouldReturnSale()
         {
+            // Arrange
             using var context = CreateContext();
             var repository = new SaleRepository(context);
 
@@ -28,21 +29,26 @@ namespace tdd_architecture_template_dotnet.Tests.Repositories.Sales
             await context.Sales.AddAsync(sale);
             await context.SaveChangesAsync();
 
-            var result = await repository.GetById(sale.Id); 
+            // Act
+            var result = await repository.GetById(sale.Id);
 
+            // Assert
             Assert.NotNull(result);
         }
 
         [Fact]
         public async Task Post_ShouldCreateSale()
         {
+            // Arrange
             using var context = CreateContext();
             var repository = new SaleRepository(context);
 
             var sale = new Sale { TotalValue = 10, UserId = 1, ProductId = 1 };
 
+            // Act
             var result = await repository.Post(sale);
 
+            // Assert
             Assert.NotNull(result.CreationDate);
             Assert.Contains(await context.Sales.ToListAsync(), s => s.Id == result.Id);
         }
@@ -51,6 +57,7 @@ namespace tdd_architecture_template_dotnet.Tests.Repositories.Sales
         [Fact]
         public async Task Put_ShouldUpdateSale()
         {
+            // Arrange
             using var context = CreateContext();
             var repository = new SaleRepository(context);
 
@@ -58,8 +65,10 @@ namespace tdd_architecture_template_dotnet.Tests.Repositories.Sales
 
             sale.TotalValue = 20;
 
+            // Act
             var result = await repository.Put(sale);
 
+            // Assert
             Assert.NotNull(result.ChangeDate);
             Assert.Equal(20, (await context.Sales.FindAsync(1)).TotalValue);
         }
@@ -67,6 +76,7 @@ namespace tdd_architecture_template_dotnet.Tests.Repositories.Sales
         [Fact]
         public async Task Delete_ShouldRemoveSale()
         {
+            // Arrange
             using var context = CreateContext();
             var repository = new SaleRepository(context);
 
@@ -76,8 +86,10 @@ namespace tdd_architecture_template_dotnet.Tests.Repositories.Sales
 
             await repository.Delete(sale);
 
+            // Act
             var deletedSale = await context.Sales.FindAsync(sale.Id);
 
+            // Assert
             Assert.Null(deletedSale);
         }
 

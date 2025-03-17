@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Moq;
 using tdd_architecture_template_dotnet.Domain.Entities.Products;
 using tdd_architecture_template_dotnet.Infrastructure.Data.Context;
 using tdd_architecture_template_dotnet.Infrastructure.Repositories.Products;
