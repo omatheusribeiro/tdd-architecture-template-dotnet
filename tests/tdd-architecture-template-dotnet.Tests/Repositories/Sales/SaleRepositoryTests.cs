@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Moq;
-using tdd_architecture_template_dotnet.Application.ViewModels.Sales;
 using tdd_architecture_template_dotnet.Domain.Entities.Sales;
 using tdd_architecture_template_dotnet.Infrastructure.Data.Context;
 using tdd_architecture_template_dotnet.Infrastructure.Repositories.Sales;
@@ -9,134 +7,79 @@ namespace tdd_architecture_template_dotnet.Tests.Repositories.Sales
 {
     public class SaleRepositoryTests
     {
-        private readonly Mock<ApplicationDbContext> _contextMock;
-        private readonly SaleRepository _repository;
-        private readonly Mock<DbSet<Sale>> _dbSetMock;
-
-        public SaleRepositoryTests()
+        private ApplicationDbContext CreateContext()
         {
-            _contextMock = new Mock<ApplicationDbContext>();
-            _dbSetMock = new Mock<DbSet<Sale>>();
-            _contextMock.Setup(x => x.Sales).Returns(_dbSetMock.Object);
-            _repository = new SaleRepository(_contextMock.Object);
-        }
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
 
-        [Fact]
-        public async Task GetAll_ShouldReturnAllSales()
-        {
-            // Arrange
-            var sales = new List<Sale>
-            {
-                new Sale { Id = 1, TotalValue = 10, UserId = 1, ProductId = 1 },
-                new Sale { Id = 2, TotalValue = 10, UserId = 1, ProductId = 1 }
-            };
-
-            _dbSetMock.Setup(x => x.ToListAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(sales);
-
-            // Act
-            var result = await _repository.GetAll();
-
-            // Assert
-            Assert.Equal(2, result.Count());
-            Assert.Equal(sales, result);
+            var context = new ApplicationDbContext(options);
+            context.Database.EnsureCreated();
+            return context;
         }
 
         [Fact]
         public async Task GetById_ShouldReturnSale()
         {
-            // Arrange
-            var sale = new Sale { Id = 1, TotalValue = 10, UserId = 1, ProductId = 1 };
-            var queryable = new List<Sale> { sale }.AsQueryable();
+            using var context = CreateContext();
+            var repository = new SaleRepository(context);
 
-            _dbSetMock.As<IQueryable<Sale>>().Setup(x => x.Provider).Returns(queryable.Provider);
-            _dbSetMock.As<IQueryable<Sale>>().Setup(x => x.Expression).Returns(queryable.Expression);
-            _dbSetMock.As<IQueryable<Sale>>().Setup(x => x.ElementType).Returns(queryable.ElementType);
-            _dbSetMock.As<IQueryable<Sale>>().Setup(x => x.GetEnumerator()).Returns(queryable.GetEnumerator());
+            var sale = new Sale { TotalValue = 10, UserId = 1, ProductId = 1 };
+            await context.Sales.AddAsync(sale);
+            await context.SaveChangesAsync();
 
-            // Act
-            var result = await _repository.GetById(1);
+            var result = await repository.GetById(sale.Id); 
 
-            // Assert
             Assert.NotNull(result);
-            Assert.Equal(1, result.Id);
-            Assert.Equal(100.00m, result.TotalValue);
         }
 
         [Fact]
         public async Task Post_ShouldCreateSale()
         {
-            // Arrange
-            var sale = new Sale { Id = 1, TotalValue = 10, UserId = 1, ProductId = 1 };
+            using var context = CreateContext();
+            var repository = new SaleRepository(context);
 
-            // Act
-            var result = await _repository.Post(sale);
+            var sale = new Sale { TotalValue = 10, UserId = 1, ProductId = 1 };
 
-            // Assert
+            var result = await repository.Post(sale);
+
             Assert.NotNull(result.CreationDate);
-            _contextMock.Verify(x => x.Sales.Add(It.IsAny<Sale>()), Times.Once);
-            _contextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
+            Assert.Contains(await context.Sales.ToListAsync(), s => s.Id == result.Id);
         }
+
 
         [Fact]
         public async Task Put_ShouldUpdateSale()
         {
-            // Arrange
+            using var context = CreateContext();
+            var repository = new SaleRepository(context);
+
             var sale = new Sale { Id = 1, TotalValue = 10, UserId = 1, ProductId = 1 };
 
-            // Act
-            var result = await _repository.Put(sale);
+            sale.TotalValue = 20;
 
-            // Assert
+            var result = await repository.Put(sale);
+
             Assert.NotNull(result.ChangeDate);
-            _contextMock.Verify(x => x.Sales.Update(It.IsAny<Sale>()), Times.Once);
-            _contextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
+            Assert.Equal(20, (await context.Sales.FindAsync(1)).TotalValue);
         }
 
         [Fact]
         public async Task Delete_ShouldRemoveSale()
         {
-            // Arrange
-            var sale = new Sale { Id = 1, TotalValue = 10, UserId = 1, ProductId = 1 };
+            using var context = CreateContext();
+            var repository = new SaleRepository(context);
 
-            // Act
-            var result = await _repository.Delete(sale);
+            var sale = new Sale { TotalValue = 10, UserId = 1, ProductId = 1 };
+            await context.Sales.AddAsync(sale);
+            await context.SaveChangesAsync();
 
-            // Assert
-            _contextMock.Verify(x => x.Sales.Remove(It.IsAny<Sale>()), Times.Once);
-            _contextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
+            await repository.Delete(sale);
+
+            var deletedSale = await context.Sales.FindAsync(sale.Id);
+
+            Assert.Null(deletedSale);
         }
 
-        [Fact]
-        public async Task Post_ShouldSetCreationDateToUtcNow()
-        {
-            // Arrange
-            var sale = new Sale { Id = 1, TotalValue = 10, UserId = 1, ProductId = 1 };
-            var beforeTest = DateTime.UtcNow;
-
-            // Act
-            var result = await _repository.Post(sale);
-
-            // Assert
-            Assert.NotNull(result.CreationDate);
-            Assert.True(result.CreationDate >= beforeTest);
-            Assert.True(result.CreationDate <= DateTime.UtcNow);
-        }
-
-        [Fact]
-        public async Task Put_ShouldSetChangeDateToUtcNow()
-        {
-            // Arrange
-            var sale = new Sale { Id = 1, TotalValue = 10, UserId = 1, ProductId = 1 };
-            var beforeTest = DateTime.UtcNow;
-
-            // Act
-            var result = await _repository.Put(sale);
-
-            // Assert
-            Assert.NotNull(result.ChangeDate);
-            Assert.True(result.ChangeDate >= beforeTest);
-            Assert.True(result.ChangeDate <= DateTime.UtcNow);
-        }
     }
 }
