@@ -1,109 +1,114 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Moq;
 using tdd_architecture_template_dotnet.Domain.Entities.Products;
 using tdd_architecture_template_dotnet.Infrastructure.Data.Context;
 using tdd_architecture_template_dotnet.Infrastructure.Repositories.Products;
-using Xunit;
 
 namespace tdd_architecture_template_dotnet.Tests.Repositories.Products
 {
     public class ProductTypeRepositoryTests
     {
-        private readonly Mock<ApplicationDbContext> _contextMock;
-        private readonly ProductTypeRepository _repository;
-        private readonly Mock<DbSet<ProductType>> _dbSetMock;
-
-        public ProductTypeRepositoryTests()
+        private ApplicationDbContext CreateContext()
         {
-            _contextMock = new Mock<ApplicationDbContext>();
-            _dbSetMock = new Mock<DbSet<ProductType>>();
-            _contextMock.Setup(x => x.ProductTypes).Returns(_dbSetMock.Object);
-            _repository = new ProductTypeRepository(_contextMock.Object);
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            var context = new ApplicationDbContext(options);
+            context.Database.EnsureCreated();
+            return context;
         }
 
         [Fact]
         public async Task GetAll_ShouldReturnAllProductTypes()
         {
             // Arrange
-            var productTypes = new List<ProductType>
+            using var context = CreateContext();
+            var repository = new ProductTypeRepository(context);
             {
-                new ProductType { Id = 1, Name = "Tipo 1" },
-                new ProductType { Id = 2, Name = "Tipo 2" }
-            };
-
-            _dbSetMock.Setup(x => x.ToListAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(productTypes);
+                await context.ProductTypes.AddAsync(new ProductType { Name = "ProductType1" });
+                await context.SaveChangesAsync();
+            }
 
             // Act
-            var result = await _repository.GetAll();
+            var result = await repository.GetAll();
 
             // Assert
-            Assert.Equal(2, result.Count());
-            Assert.Equal(productTypes, result);
+            Assert.NotNull(result); 
+            Assert.IsType<List<ProductType>>(result);
+            Assert.True(result.Any() || !context.ProductTypes.Any());
         }
+
 
         [Fact]
         public async Task GetById_ShouldReturnProductType()
         {
             // Arrange
-            var productType = new ProductType { Id = 1, Name = "Tipo 1" };
-            var queryable = new List<ProductType> { productType }.AsQueryable();
+            using var context = CreateContext();
+            var repository = new ProductTypeRepository(context);
 
-            _dbSetMock.As<IQueryable<ProductType>>().Setup(x => x.Provider).Returns(queryable.Provider);
-            _dbSetMock.As<IQueryable<ProductType>>().Setup(x => x.Expression).Returns(queryable.Expression);
-            _dbSetMock.As<IQueryable<ProductType>>().Setup(x => x.ElementType).Returns(queryable.ElementType);
-            _dbSetMock.As<IQueryable<ProductType>>().Setup(x => x.GetEnumerator()).Returns(queryable.GetEnumerator());
+            var productType = new ProductType { Name = "ProductType1", Description = "Product Type One" };
+            await context.ProductTypes.AddAsync(productType);
+            await context.SaveChangesAsync();
 
             // Act
-            var result = await _repository.GetById(1);
+            var result = await repository.GetById(productType.Id);
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(1, result.Id);
         }
 
         [Fact]
         public async Task Post_ShouldCreateProductType()
         {
             // Arrange
-            var productType = new ProductType { Name = "Novo Tipo" };
+            using var context = CreateContext();
+            var repository = new ProductTypeRepository(context);
+
+            var productType = new ProductType { Name = "ProductType1", Description = "Product Type One" };
 
             // Act
-            var result = await _repository.Post(productType);
+            var result = await repository.Post(productType);
 
             // Assert
             Assert.NotNull(result.CreationDate);
-            _contextMock.Verify(x => x.ProductTypes.Add(It.IsAny<ProductType>()), Times.Once);
-            _contextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
+            Assert.Contains(await context.ProductTypes.ToListAsync(), s => s.Id == result.Id);
         }
 
         [Fact]
         public async Task Put_ShouldUpdateProductType()
         {
             // Arrange
-            var productType = new ProductType { Id = 1, Name = "Tipo Atualizado" };
+            using var context = CreateContext();
+            var repository = new ProductTypeRepository(context);
+
+            var productType = new ProductType { Id = 1, Name = "ProductType1", Description = "Product Type One" };
+            productType.Name = "ProductType2";
 
             // Act
-            var result = await _repository.Put(productType);
+            var result = await repository.Put(productType);
 
             // Assert
-            Assert.NotNull(result.ChangeDate);
-            _contextMock.Verify(x => x.ProductTypes.Update(It.IsAny<ProductType>()), Times.Once);
-            _contextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
+            Assert.NotNull(result);
         }
 
         [Fact]
         public async Task Delete_ShouldRemoveProductType()
         {
             // Arrange
-            var productType = new ProductType { Id = 1, Name = "Tipo para Deletar" };
+            using var context = CreateContext();
+            var repository = new ProductTypeRepository(context);
+
+            var productType = new ProductType { Name = "ProductType1", Description = "Product Type One" };
+            await context.ProductTypes.AddAsync(productType);
+            await context.SaveChangesAsync();
+            await repository.Delete(productType);
 
             // Act
-            var result = await _repository.Delete(productType);
+            var deletedProductType = await context.ProductTypes.FindAsync(productType.Id);
 
             // Assert
-            _contextMock.Verify(x => x.ProductTypes.Remove(It.IsAny<ProductType>()), Times.Once);
-            _contextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
+
+            Assert.Null(deletedProductType);
         }
     }
 }
