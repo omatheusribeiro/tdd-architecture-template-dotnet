@@ -21,7 +21,7 @@ namespace tdd_architecture_template_dotnet.Tests.Services.Users
             _mapperMock = new Mock<IMapper>();
             _userAddressService = new UserAddresService(_mapperMock.Object, _userAddressRepositoryMock.Object);
             _fixture = new Fixture();
-        }
+        } 
 
         [Fact]
         public async Task Put_WithValidAddress_ReturnsSuccess()
