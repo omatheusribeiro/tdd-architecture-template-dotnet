@@ -23,7 +23,7 @@ namespace tdd_architecture_template_dotnet.Controllers.V1.Sales
         {
             var response = await _saleService.GetAll();
 
-            if (response.StatusCode == (int)HttpStatus.BadRequest)
+            if (response == null || response.StatusCode == (int)HttpStatus.BadRequest)
                 return BadRequest(response);
 
             return Ok(response);
@@ -36,7 +36,7 @@ namespace tdd_architecture_template_dotnet.Controllers.V1.Sales
         {
             var response = await _saleService.GetById(id);
 
-            if (response.StatusCode == (int)HttpStatus.BadRequest)
+            if (response == null || response.StatusCode == (int)HttpStatus.BadRequest)
                 return BadRequest(response);
 
             return Ok(response);
@@ -49,7 +49,7 @@ namespace tdd_architecture_template_dotnet.Controllers.V1.Sales
         {
             var response = await _saleService.Put(sale);
 
-            if (response.StatusCode == (int)HttpStatus.BadRequest)
+            if (response == null || response.StatusCode == (int)HttpStatus.BadRequest)
                 return BadRequest(response);
 
             return Ok(response);
@@ -61,7 +61,7 @@ namespace tdd_architecture_template_dotnet.Controllers.V1.Sales
         {
             var response = await _saleService.Post(sale);
 
-            if (response.StatusCode == (int)HttpStatus.BadRequest)
+            if (response == null || response.StatusCode == (int)HttpStatus.BadRequest)
                 return BadRequest(response);
 
             return Ok(response);
@@ -73,7 +73,7 @@ namespace tdd_architecture_template_dotnet.Controllers.V1.Sales
         {
             var response = await _saleService.Delete(sale);
 
-            if (response.StatusCode == (int)HttpStatus.BadRequest)
+            if (response == null || response.StatusCode == (int)HttpStatus.BadRequest)
                 return BadRequest(response);
 
             return Ok(response);
