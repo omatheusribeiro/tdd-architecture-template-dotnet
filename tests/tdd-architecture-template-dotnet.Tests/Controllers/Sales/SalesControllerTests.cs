@@ -82,7 +82,7 @@ namespace tdd_architecture_template_dotnet.Tests.Controllers.Sales
 
             var result = await _controller.Post(new SaleViewModel());
 
-            Assert.IsType<BadRequestObjectResult>(result);
+            Assert.IsType<BadRequestObjectResult>(result.Result);
         }
     }
 }
