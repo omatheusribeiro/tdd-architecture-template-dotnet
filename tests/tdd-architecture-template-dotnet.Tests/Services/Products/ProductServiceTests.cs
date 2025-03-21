@@ -8,7 +8,7 @@ using tdd_architecture_template_dotnet.Domain.Interfaces.Products;
 
 namespace tdd_architecture_template_dotnet.Tests.Services.Products
 {
-    public class ProductServiceTests
+    public class ProductServiceTests 
     {
         private readonly Mock<IProductRepository> _productRepositoryMock;
         private readonly Mock<IProductTypeRepository> _productTypeRepositoryMock;
