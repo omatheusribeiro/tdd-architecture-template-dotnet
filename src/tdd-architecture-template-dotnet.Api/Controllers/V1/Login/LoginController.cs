@@ -11,7 +11,7 @@ namespace tdd_architecture_template_dotnet.Controllers.V1.Login
     {
         private readonly ILoginService _loginService;
 
-        public LoginController(ILoginService loginService)
+        public  LoginController(ILoginService loginService)
         {
             _loginService = loginService;
         }
