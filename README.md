@@ -67,15 +67,11 @@ tdd-architecture-dotnet.Infrastructure
  │   │   ├── Interfaces      # Logger Singleton Interface
 
 tdd-architecture-dotnet.Tests
- ├── Controller       # Apresentation layer testing
- │   ├── Products      # Product tests implementations
- │   ├── Sales         # Sales tests implementations
- │   ├── Users         # User tests implementations
  ├── Services       # Application layer testing
  │   ├── Products      # Product tests implementations
  │   ├── Sales         # Sales tests implementations
  │   ├── Users         # User tests implementations
- ├── Services       # Infrastructure layer testing
+ ├── Repositories       # Infrastructure layer testing
  │   ├── Products      # Product tests implementations
  │   ├── Sales         # Sales tests implementations
  │   ├── Users         # User tests implementations
@@ -104,7 +100,7 @@ Before running the application, configure the **database connection string** in:
 Example:
 ```json
 "ConnectionStrings": {
-  "DefaultConnection": "Data Source=localhost;Initial Catalog=tdd-architecture-dotnet;Integrated Security=True;TrustServerCertificate=True"
+  "DefaultConnection": "Data Source=localhost\\SQLEXPRESS;Initial Catalog=tdd-architecture-dotnet;Integrated Security=True;TrustServerCertificate=True"
 }
 ```
 
