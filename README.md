@@ -92,7 +92,7 @@ Make sure you have the following installed:
 ### 🔧 Installation
 ```bash
 # Clone the repository
-git clone https://github.com/omatheusribeiro/tdd-architecture-template-dotnet
+git clone https://github.com/omatheusribeiro/tdd-architecture-template-dotnet.git
 cd tdd-architecture-template-dotnet
 ```
 
