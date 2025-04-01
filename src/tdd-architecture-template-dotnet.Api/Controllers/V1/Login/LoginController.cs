@@ -5,7 +5,7 @@ using tdd_architecture_template_dotnet.Domain.Enums;
 
 namespace tdd_architecture_template_dotnet.Controllers.V1.Login
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]")] 
     [ApiController] 
     public class LoginController : ControllerBase
     {
