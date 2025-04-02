@@ -5,7 +5,8 @@ using tdd_architecture_template_dotnet.Application.Services.Users;
 using tdd_architecture_template_dotnet.Application.ViewModels.Users;
 using tdd_architecture_template_dotnet.Domain.Entities.Users;
 using tdd_architecture_template_dotnet.Domain.Interfaces.Users;
- 
+using tdd_architecture_template_dotnet.Infrastructure.Singletons.Logger.Interfaces;
+
 namespace tdd_architecture_template_dotnet.Tests.Services.Users
 {
     public class UserServiceTests
@@ -13,6 +14,7 @@ namespace tdd_architecture_template_dotnet.Tests.Services.Users
         private readonly Mock<IUserRepository> _userRepositoryMock;
         private readonly Mock<IUserAddressRepository> _userAddressRepositoryMock;
         private readonly Mock<IUserContactRepository> _userContactRepositoryMock;
+        private readonly Mock<ILoggerService> _loggerServiceMock;
         private readonly Mock<IMapper> _mapperMock;
         private readonly UserService _userService;
         private readonly Fixture _fixture;
@@ -22,11 +24,13 @@ namespace tdd_architecture_template_dotnet.Tests.Services.Users
             _userRepositoryMock = new Mock<IUserRepository>();
             _userAddressRepositoryMock = new Mock<IUserAddressRepository>();
             _userContactRepositoryMock = new Mock<IUserContactRepository>();
+            _loggerServiceMock = new Mock<ILoggerService>();
             _mapperMock = new Mock<IMapper>();
             _userService = new UserService(
                 _userRepositoryMock.Object,
                 _userAddressRepositoryMock.Object,
                 _userContactRepositoryMock.Object,
+                _loggerServiceMock.Object,
                 _mapperMock.Object);
             _fixture = new Fixture();
         }

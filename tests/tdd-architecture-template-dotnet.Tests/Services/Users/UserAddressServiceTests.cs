@@ -5,12 +5,14 @@ using tdd_architecture_template_dotnet.Application.Services.Users;
 using tdd_architecture_template_dotnet.Application.ViewModels.Users;
 using tdd_architecture_template_dotnet.Domain.Entities.Users;
 using tdd_architecture_template_dotnet.Domain.Interfaces.Users;
+using tdd_architecture_template_dotnet.Infrastructure.Singletons.Logger.Interfaces;
 
 namespace tdd_architecture_template_dotnet.Tests.Services.Users
 {
     public class UserAddressServiceTests
     {
         private readonly Mock<IUserAddressRepository> _userAddressRepositoryMock;
+        private readonly Mock<ILoggerService> _loggerServiceMock;
         private readonly Mock<IMapper> _mapperMock;
         private readonly UserAddresService _userAddressService;
         private readonly Fixture _fixture;
@@ -18,8 +20,9 @@ namespace tdd_architecture_template_dotnet.Tests.Services.Users
         public UserAddressServiceTests()
         {
             _userAddressRepositoryMock = new Mock<IUserAddressRepository>();
+            _loggerServiceMock = new Mock<ILoggerService>();
             _mapperMock = new Mock<IMapper>();
-            _userAddressService = new UserAddresService(_mapperMock.Object, _userAddressRepositoryMock.Object);
+            _userAddressService = new UserAddresService(_mapperMock.Object, _userAddressRepositoryMock.Object, _loggerServiceMock.Object);
             _fixture = new Fixture();
         } 
 

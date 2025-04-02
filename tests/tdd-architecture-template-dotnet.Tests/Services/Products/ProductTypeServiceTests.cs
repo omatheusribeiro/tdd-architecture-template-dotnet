@@ -5,12 +5,14 @@ using tdd_architecture_template_dotnet.Application.Services.Products;
 using tdd_architecture_template_dotnet.Application.ViewModels.Products;
 using tdd_architecture_template_dotnet.Domain.Entities.Products;
 using tdd_architecture_template_dotnet.Domain.Interfaces.Products;
+using tdd_architecture_template_dotnet.Infrastructure.Singletons.Logger.Interfaces;
 
 namespace tdd_architecture_template_dotnet.Tests.Services.Products
 { 
     public class ProductTypeServiceTests
     {
         private readonly Mock<IProductTypeRepository> _productTypeRepositoryMock;
+        private readonly Mock<ILoggerService> _loggerServiceMock;
         private readonly Mock<IMapper> _mapperMock;
         private readonly ProductTypeService _productTypeService;
         private readonly Fixture _fixture;
@@ -18,8 +20,9 @@ namespace tdd_architecture_template_dotnet.Tests.Services.Products
         public ProductTypeServiceTests()
         {
             _productTypeRepositoryMock = new Mock<IProductTypeRepository>();
+            _loggerServiceMock = new Mock<ILoggerService>();
             _mapperMock = new Mock<IMapper>();
-            _productTypeService = new ProductTypeService(_mapperMock.Object, _productTypeRepositoryMock.Object);
+            _productTypeService = new ProductTypeService(_mapperMock.Object, _productTypeRepositoryMock.Object, _loggerServiceMock.Object);
             _fixture = new Fixture();
         }
 

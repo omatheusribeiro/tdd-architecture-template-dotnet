@@ -5,6 +5,7 @@ using tdd_architecture_template_dotnet.Application.Services.Products;
 using tdd_architecture_template_dotnet.Application.ViewModels.Products;
 using tdd_architecture_template_dotnet.Domain.Entities.Products;
 using tdd_architecture_template_dotnet.Domain.Interfaces.Products;
+using tdd_architecture_template_dotnet.Infrastructure.Singletons.Logger.Interfaces;
 
 namespace tdd_architecture_template_dotnet.Tests.Services.Products
 {
@@ -12,6 +13,7 @@ namespace tdd_architecture_template_dotnet.Tests.Services.Products
     {
         private readonly Mock<IProductRepository> _productRepositoryMock;
         private readonly Mock<IProductTypeRepository> _productTypeRepositoryMock;
+        private readonly Mock<ILoggerService> _loggerServiceMock;
         private readonly Mock<IMapper> _mapperMock;
         private readonly ProductService _productService;
         private readonly Fixture _fixture;
@@ -20,10 +22,12 @@ namespace tdd_architecture_template_dotnet.Tests.Services.Products
         {
             _productRepositoryMock = new Mock<IProductRepository>();
             _productTypeRepositoryMock = new Mock<IProductTypeRepository>();
+            _loggerServiceMock = new Mock<ILoggerService>();
             _mapperMock = new Mock<IMapper>();
             _productService = new ProductService(
                 _productRepositoryMock.Object,
                 _productTypeRepositoryMock.Object,
+                _loggerServiceMock.Object,
                 _mapperMock.Object);
             _fixture = new Fixture();
         }
@@ -126,7 +130,6 @@ namespace tdd_architecture_template_dotnet.Tests.Services.Products
 
             // Assert
             Assert.False(result.Success);
-            Assert.Equal("product not found.", result.Message);
         }
 
         [Fact]

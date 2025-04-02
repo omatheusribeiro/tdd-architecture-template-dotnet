@@ -9,6 +9,7 @@ using tdd_architecture_template_dotnet.Domain.Entities.Users;
 using tdd_architecture_template_dotnet.Domain.Interfaces.Products;
 using tdd_architecture_template_dotnet.Domain.Interfaces.Sales;
 using tdd_architecture_template_dotnet.Domain.Interfaces.Users;
+using tdd_architecture_template_dotnet.Infrastructure.Singletons.Logger.Interfaces;
 
 namespace tdd_architecture_template_dotnet.Tests.Services.Sales
 {
@@ -17,6 +18,7 @@ namespace tdd_architecture_template_dotnet.Tests.Services.Sales
         private readonly Mock<ISaleRepository> _saleRepositoryMock;
         private readonly Mock<IProductRepository> _productRepositoryMock;
         private readonly Mock<IUserRepository> _userRepositoryMock;
+        private readonly Mock<ILoggerService> _loggerServiceMock;
         private readonly Mock<IMapper> _mapperMock;
         private readonly SaleService _saleService;
         private readonly Fixture _fixture;
@@ -26,11 +28,13 @@ namespace tdd_architecture_template_dotnet.Tests.Services.Sales
             _saleRepositoryMock = new Mock<ISaleRepository>();
             _productRepositoryMock = new Mock<IProductRepository>();
             _userRepositoryMock = new Mock<IUserRepository>();
+            _loggerServiceMock = new Mock<ILoggerService>();
             _mapperMock = new Mock<IMapper>();
             _saleService = new SaleService(
                 _saleRepositoryMock.Object,
                 _productRepositoryMock.Object,
                 _userRepositoryMock.Object,
+                _loggerServiceMock.Object,
                 _mapperMock.Object);
             _fixture = new Fixture();
         }
