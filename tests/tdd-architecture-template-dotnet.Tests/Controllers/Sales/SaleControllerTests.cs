@@ -184,5 +184,4 @@ namespace tdd_architecture_template_dotnet.Tests.Controllers.Sales
             Assert.Equal(error, badRequest.Value);
         }
     }
-
 }
