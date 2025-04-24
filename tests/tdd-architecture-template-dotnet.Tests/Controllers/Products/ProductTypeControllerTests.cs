@@ -1,117 +1,148 @@
-﻿using Moq;
+﻿using Xunit;
+using Moq;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using tdd_architecture_template_dotnet.Controllers.V1.Products;
 using tdd_architecture_template_dotnet.Application.Services.Products.Interfaces;
 using tdd_architecture_template_dotnet.Application.ViewModels.Products;
 using tdd_architecture_template_dotnet.Domain.Enums;
+using tdd_architecture_template_dotnet.Application.Services;
 using tdd_architecture_template_dotnet.Application.Models.Http;
 
 namespace tdd_architecture_template_dotnet.Tests.Controllers.Products
 {
     public class ProductTypeControllerTests
     {
-        private readonly Mock<IProductTypeService> _productTypeServiceMock;
+        private readonly Mock<IProductTypeService> _mockService;
         private readonly ProductTypeController _controller;
 
         public ProductTypeControllerTests()
         {
-            // Create mock for the service
-            _productTypeServiceMock = new Mock<IProductTypeService>();
-
-            // Inject the mock into the controller
-            _controller = new ProductTypeController(_productTypeServiceMock.Object);
+            _mockService = new Mock<IProductTypeService>();
+            _controller = new ProductTypeController(_mockService.Object);
         }
 
-        [Fact(DisplayName = "PutProductType returns OK when the service succeeds")]
-        public async Task PutProductType_ReturnsOk_WhenSuccess()
+        [Fact(DisplayName = "Should return Ok with product type list on success")]
+        public async Task GetAll_ShouldReturnOk_WhenServiceReturnsSuccess()
         {
             // Arrange
-            var input = new ProductTypeViewModel { Name = "Electronics" };
-            var expectedResult = new Result<ProductTypeViewModel>
-            {
-                StatusCode = (int)HttpStatus.Ok,
-                Data = input
-            };
-
-            _productTypeServiceMock
-                .Setup(service => service.Put(input))
-                .ReturnsAsync(expectedResult);
+            var productTypes = new List<ProductTypeViewModel> { new ProductTypeViewModel() };
+            var result = Result<IEnumerable<ProductTypeViewModel>>.Ok(productTypes);
+            _mockService.Setup(s => s.GetAll()).ReturnsAsync(result);
 
             // Act
-            var result = await _controller.Put(input);
+            var response = await _controller.GetAll();
 
             // Assert
-            var okResult = Assert.IsType<OkObjectResult>(result.Result);
-            Assert.Equal(expectedResult, okResult.Value);
+            var okResult = Assert.IsType<OkObjectResult>(response);
+            Assert.Equal(200, okResult.StatusCode);
         }
 
-        [Fact(DisplayName = "PutProductType returns BadRequest when service returns error")]
-        public async Task PutProductType_ReturnsBadRequest_WhenBadRequest()
+        [Fact(DisplayName = "Should return BadRequest when GetAll fails")]
+        public async Task GetAll_ShouldReturnBadRequest_WhenServiceReturnsBadRequest()
         {
             // Arrange
-            var input = new ProductTypeViewModel { Name = "Invalid" };
-            var errorResult = new Result<ProductTypeViewModel>
-            {
-                StatusCode = (int)HttpStatus.BadRequest,
-                Message = "Invalid data"
-            };
-
-            _productTypeServiceMock
-                .Setup(service => service.Put(input))
-                .ReturnsAsync(errorResult);
+            var result = Result<IEnumerable<ProductTypeViewModel>>.Fail("Failed", (int)HttpStatus.BadRequest);
+            _mockService.Setup(s => s.GetAll()).ReturnsAsync(result);
 
             // Act
-            var result = await _controller.Put(input);
+            var response = await _controller.GetAll();
 
             // Assert
-            var badRequest = Assert.IsType<BadRequestObjectResult>(result.Result);
-            Assert.Equal(errorResult, badRequest.Value);
+            Assert.IsType<BadRequestObjectResult>(response);
         }
 
-        [Fact(DisplayName = "PostProductType returns OK when the service succeeds")]
-        public async Task PostProductType_ReturnsOk_WhenSuccess()
+        [Fact(DisplayName = "Should return Ok with product type when found by id")]
+        public async Task GetById_ShouldReturnOk_WhenServiceReturnsSuccess()
         {
             // Arrange
-            var input = new ProductTypeViewModel { Name = "Books" };
-            var expectedResult = new Result<ProductTypeViewModel>
-            {
-                StatusCode = (int)HttpStatus.Ok,
-                Data = input
-            };
-
-            _productTypeServiceMock
-                .Setup(service => service.Post(input))
-                .ReturnsAsync(expectedResult);
+            var productType = new ProductTypeViewModel { Id = 1 };
+            var result = Result<ProductTypeViewModel>.Ok(productType);
+            _mockService.Setup(s => s.GetById(1)).ReturnsAsync(result);
 
             // Act
-            var result = await _controller.Post(input);
+            var response = await _controller.GetById(1);
 
             // Assert
-            var okResult = Assert.IsType<OkObjectResult>(result.Result);
-            Assert.Equal(expectedResult, okResult.Value);
+            var okResult = Assert.IsType<OkObjectResult>(response);
+            Assert.Equal(200, okResult.StatusCode);
         }
 
-        [Fact(DisplayName = "PostProductType returns BadRequest when service returns error")]
-        public async Task PostProductType_ReturnsBadRequest_WhenBadRequest()
+        [Fact(DisplayName = "Should return BadRequest when GetById fails")]
+        public async Task GetById_ShouldReturnBadRequest_WhenServiceReturnsBadRequest()
         {
             // Arrange
-            var input = new ProductTypeViewModel { Name = "" };
-            var errorResult = new Result<ProductTypeViewModel>
-            {
-                StatusCode = (int)HttpStatus.BadRequest,
-                Message = "Name is required"
-            };
-
-            _productTypeServiceMock
-                .Setup(service => service.Post(input))
-                .ReturnsAsync(errorResult);
+            var result = Result<ProductTypeViewModel>.Fail("Not found", (int)HttpStatus.BadRequest);
+            _mockService.Setup(s => s.GetById(1)).ReturnsAsync(result);
 
             // Act
-            var result = await _controller.Post(input);
+            var response = await _controller.GetById(1);
 
             // Assert
-            var badRequest = Assert.IsType<BadRequestObjectResult>(result.Result);
-            Assert.Equal(errorResult, badRequest.Value);
+            Assert.IsType<BadRequestObjectResult>(response);
+        }
+
+        [Fact(DisplayName = "Should return Ok when Put is successful")]
+        public async Task Put_ShouldReturnOk_WhenServiceReturnsSuccess()
+        {
+            // Arrange
+            var model = new ProductTypeViewModel { Id = 1 };
+            var result = Result<ProductTypeViewModel>.Ok(model);
+            _mockService.Setup(s => s.Put(model)).ReturnsAsync(result);
+
+            // Act
+            var response = await _controller.Put(model);
+
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(response.Result);
+            Assert.Equal(200, okResult.StatusCode);
+        }
+
+        [Fact(DisplayName = "Should return BadRequest when Put fails")]
+        public async Task Put_ShouldReturnBadRequest_WhenServiceReturnsBadRequest()
+        {
+            // Arrange
+            var model = new ProductTypeViewModel();
+            var result = Result<ProductTypeViewModel>.Fail("Validation error", (int)HttpStatus.BadRequest);
+            _mockService.Setup(s => s.Put(model)).ReturnsAsync(result);
+
+            // Act
+            var response = await _controller.Put(model);
+
+            // Assert
+            Assert.IsType<BadRequestObjectResult>(response.Result);
+        }
+
+        [Fact(DisplayName = "Should return Ok when Post is successful")]
+        public async Task Post_ShouldReturnOk_WhenServiceReturnsSuccess()
+        {
+            // Arrange
+            var model = new ProductTypeViewModel { Id = 1 };
+            var result = Result<ProductTypeViewModel>.Ok(model);
+            _mockService.Setup(s => s.Post(model)).ReturnsAsync(result);
+
+            // Act
+            var response = await _controller.Post(model);
+
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(response.Result);
+            Assert.Equal(200, okResult.StatusCode);
+        }
+
+        [Fact(DisplayName = "Should return BadRequest when Post fails")]
+        public async Task Post_ShouldReturnBadRequest_WhenServiceReturnsBadRequest()
+        {
+            // Arrange
+            var model = new ProductTypeViewModel();
+            var result = Result<ProductTypeViewModel>.Fail("Error", (int)HttpStatus.BadRequest);
+            _mockService.Setup(s => s.Post(model)).ReturnsAsync(result);
+
+            // Act
+            var response = await _controller.Post(model);
+
+            // Assert
+            Assert.IsType<BadRequestObjectResult>(response.Result);
         }
     }
 }
