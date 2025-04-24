@@ -5,7 +5,6 @@ using tdd_architecture_template_dotnet.Application.ViewModels.Products;
 using tdd_architecture_template_dotnet.Domain.Entities.Products;
 using tdd_architecture_template_dotnet.Domain.Enums;
 using tdd_architecture_template_dotnet.Domain.Interfaces.Products;
-using tdd_architecture_template_dotnet.Infrastructure.Repositories.Products;
 using tdd_architecture_template_dotnet.Infrastructure.Singletons.Logger.Interfaces;
 
 namespace tdd_architecture_template_dotnet.Application.Services.Products
