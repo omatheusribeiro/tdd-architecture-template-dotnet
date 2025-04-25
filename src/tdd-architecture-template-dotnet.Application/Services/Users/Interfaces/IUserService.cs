@@ -9,6 +9,6 @@ namespace tdd_architecture_template_dotnet.Application.Services.Users.Interfaces
         Task<Result<UserViewModel>> GetById(int id);
         Task<Result<UserViewModel>> Put(UserViewModel user);
         Task<Result<UserViewModel>> Post(UserViewModel user);
-        Task<Result<UserViewModel>> Delete(UserViewModel user);
+        Task<Result<UserViewModel>> Delete(int userId);
     }
 }

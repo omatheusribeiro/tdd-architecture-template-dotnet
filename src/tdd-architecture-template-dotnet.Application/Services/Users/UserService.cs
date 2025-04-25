@@ -176,31 +176,17 @@ namespace tdd_architecture_template_dotnet.Application.Services.Users
 
         }
 
-        public async Task<Result<UserViewModel>> Delete(UserViewModel user)
+        public async Task<Result<UserViewModel>> Delete(int userId)
         {
             try
             {
-                if (user is null)
+                if (userId is 0)
                 {
                     _loggerService.LogInfo("There is missing information to delete the user.");
                     return Result<UserViewModel>.Fail("There is missing information to delete the user.", (int)HttpStatus.BadRequest);
                 }
 
-                if (user.Address is null)
-                {
-                    _loggerService.LogInfo("There is missing information to delete the user address.");
-                    return Result<UserViewModel>.Fail("There is missing information to delete the user address.", (int)HttpStatus.BadRequest);
-                }
-
-                if (user.Contact is null)
-                {
-                    _loggerService.LogInfo("There is missing information to delete the user contact.");
-                    return Result<UserViewModel>.Fail("There is missing information to delete the user contact.", (int)HttpStatus.BadRequest);
-                }
-
-                var userEntity = await _userRepository.GetById(user.Id);
-                var addressEntity = await _userAddressRepository.GetById(user.Address.Id);
-                var contactEntity = await _userContactRepository.GetById(user.Contact.Id);
+                var userEntity = await _userRepository.GetById(userId);
 
                 if (userEntity is null)
                 {
@@ -208,25 +194,25 @@ namespace tdd_architecture_template_dotnet.Application.Services.Users
                     return Result<UserViewModel>.Fail("User not found.", (int)HttpStatus.BadRequest);
                 }
 
-                if (addressEntity is null)
+                if (userEntity.Address is null)
                 {
                     _loggerService.LogInfo("Address not found.");
                     return Result<UserViewModel>.Fail("Address not found.", (int)HttpStatus.BadRequest);
                 }
 
-                if (contactEntity is null)
+                if (userEntity.Contact is null)
                 {
                     _loggerService.LogInfo("Contact not found.");
                     return Result<UserViewModel>.Fail("Contact not found.", (int)HttpStatus.BadRequest);
                 }
 
-                var mapUser = _mapper.Map<User>(user);
+                var mapUser = _mapper.Map<User>(userEntity);
 
                 var resultUser = await _userRepository.Delete(mapUser);
 
                 var mapUserModel = _mapper.Map<UserViewModel>(resultUser);
 
-                return Result<UserViewModel>.Ok(mapUserModel);
+                return Result<UserViewModel>.Ok(null);
             }
             catch (Exception ex)
             {

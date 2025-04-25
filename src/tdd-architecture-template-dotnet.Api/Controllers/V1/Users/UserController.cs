@@ -67,11 +67,10 @@ namespace tdd_architecture_template_dotnet.Controllers.V1.Users
             return Ok(response);
         }
 
-        [HttpDelete("DeleteUser")]
-        [Authorize]
-        public async Task<ActionResult<UserViewModel>> Delete([FromBody] UserViewModel user)
+        [HttpDelete("DeleteUser/{userId:int}")]
+        public async Task<ActionResult<UserViewModel>> Delete([FromRoute] int userId)
         {
-            var response = await _userService.Delete(user);
+            var response = await _userService.Delete(userId);
 
             if (response.StatusCode == (int)HttpStatus.BadRequest)
                 return BadRequest(response);
