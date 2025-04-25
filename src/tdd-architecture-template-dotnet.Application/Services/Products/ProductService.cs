@@ -5,6 +5,7 @@ using tdd_architecture_template_dotnet.Application.ViewModels.Products;
 using tdd_architecture_template_dotnet.Domain.Entities.Products;
 using tdd_architecture_template_dotnet.Domain.Enums;
 using tdd_architecture_template_dotnet.Domain.Interfaces.Products;
+using tdd_architecture_template_dotnet.Infrastructure.Singletons.Cache.Interfaces;
 using tdd_architecture_template_dotnet.Infrastructure.Singletons.Logger.Interfaces;
 
 namespace tdd_architecture_template_dotnet.Application.Services.Products
@@ -14,17 +15,20 @@ namespace tdd_architecture_template_dotnet.Application.Services.Products
         private readonly IProductRepository _productRepository;
         private readonly IProductTypeRepository _productTypeRepository;
         private readonly ILoggerService _loggerService;
+        private readonly ICacheService _cacheService;
         private readonly IMapper _mapper;
 
         public ProductService(
             IProductRepository productRepository,
             IProductTypeRepository productTypeRepository,
             ILoggerService loggerService,
+            ICacheService cacheService,
             IMapper mapper)
         {
             _productRepository = productRepository;
             _productTypeRepository = productTypeRepository;
             _loggerService = loggerService;
+            _cacheService = cacheService;
             _mapper = mapper;
         }
 
@@ -57,6 +61,14 @@ namespace tdd_architecture_template_dotnet.Application.Services.Products
         {
             try
             {
+                string cacheKey = $"Product-{id}";
+
+                var cachedProduct = _cacheService.Get<Result<ProductViewModel>>(cacheKey);
+                if (cachedProduct != null)
+                {
+                    return cachedProduct;
+                }
+
                 var product = await _productRepository.GetById(id);
 
                 if (product is null)
