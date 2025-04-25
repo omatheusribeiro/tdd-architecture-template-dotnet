@@ -67,11 +67,16 @@ tdd-architecture-dotnet.Infrastructure
  │   │   ├── Interfaces      # Logger Singleton Interface
 
 tdd-architecture-dotnet.Tests
- ├── Services       # Application layer testing
+ ├── Controllers       # Apresentation layer testing
  │   ├── Products      # Product tests implementations
  │   ├── Sales         # Sales tests implementations
  │   ├── Users         # User tests implementations
- ├── Repositories       # Infrastructure layer testing
+ │   ├── Login         # Login tests implementations
+ ├── Services          # Application layer testing
+ │   ├── Products      # Product tests implementations
+ │   ├── Sales         # Sales tests implementations
+ │   ├── Users         # User tests implementations
+ ├── Repositories      # Infrastructure layer testing
  │   ├── Products      # Product tests implementations
  │   ├── Sales         # Sales tests implementations
  │   ├── Users         # User tests implementations
