@@ -5,6 +5,7 @@ using tdd_architecture_template_dotnet.Application.Services.Products;
 using tdd_architecture_template_dotnet.Application.ViewModels.Products;
 using tdd_architecture_template_dotnet.Domain.Entities.Products;
 using tdd_architecture_template_dotnet.Domain.Interfaces.Products;
+using tdd_architecture_template_dotnet.Infrastructure.Singletons.Cache.Interfaces;
 using tdd_architecture_template_dotnet.Infrastructure.Singletons.Logger.Interfaces;
 
 namespace tdd_architecture_template_dotnet.Tests.Services.Products
@@ -14,6 +15,7 @@ namespace tdd_architecture_template_dotnet.Tests.Services.Products
         private readonly Mock<IProductRepository> _productRepositoryMock;
         private readonly Mock<IProductTypeRepository> _productTypeRepositoryMock;
         private readonly Mock<ILoggerService> _loggerServiceMock;
+        private readonly Mock<ICacheService> _cacheServiceMock;
         private readonly Mock<IMapper> _mapperMock;
         private readonly ProductService _productService;
         private readonly Fixture _fixture;
@@ -23,6 +25,7 @@ namespace tdd_architecture_template_dotnet.Tests.Services.Products
             _productRepositoryMock = new Mock<IProductRepository>();
             _productTypeRepositoryMock = new Mock<IProductTypeRepository>();
             _loggerServiceMock = new Mock<ILoggerService>();
+            _cacheServiceMock = new Mock<ICacheService>();
             _mapperMock = new Mock<IMapper>();
             _fixture = new Fixture();
 
@@ -37,6 +40,7 @@ namespace tdd_architecture_template_dotnet.Tests.Services.Products
                 _productRepositoryMock.Object,
                 _productTypeRepositoryMock.Object,
                 _loggerServiceMock.Object,
+                _cacheServiceMock.Object,
                 _mapperMock.Object);
         }
 
