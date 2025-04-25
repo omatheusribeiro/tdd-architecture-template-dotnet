@@ -151,10 +151,18 @@ namespace tdd_architecture_template_dotnet.Application.Services.Sales
             }
         }
 
-        public async Task<Result<SaleViewModel>> Delete(SaleViewModel sale)
+        public async Task<Result<SaleViewModel>> Delete(int saleId)
         {
             try
             {
+                var sale = await _saleRepository.GetById(saleId);
+
+                if (sale is null)
+                {
+                    _loggerService.LogInfo("Sale not found.");
+                    return Result<SaleViewModel>.Fail("Sale not found.", (int)HttpStatus.BadRequest);
+                }
+
                 var product = await _productRepository.GetById(sale.ProductId);
 
                 var user = await _userRepository.GetById(sale.UserId);
@@ -177,7 +185,7 @@ namespace tdd_architecture_template_dotnet.Application.Services.Sales
 
                 var mapSaleModel = _mapper.Map<SaleViewModel>(result);
 
-                return Result<SaleViewModel>.Ok(mapSaleModel);
+                return Result<SaleViewModel>.Ok(null);
             }
             catch (Exception ex)
             {

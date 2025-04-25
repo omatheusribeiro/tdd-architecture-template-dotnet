@@ -158,9 +158,9 @@ namespace tdd_architecture_template_dotnet.Tests.Controllers.Sales
                 Data = input
             };
 
-            _saleServiceMock.Setup(s => s.Delete(input)).ReturnsAsync(expected);
+            _saleServiceMock.Setup(s => s.Delete(1)).ReturnsAsync(expected);
 
-            var result = await _controller.Delete(input);
+            var result = await _controller.Delete(1);
 
             var okResult = Assert.IsType<OkObjectResult>(result.Result);
             Assert.Equal(expected, okResult.Value);
@@ -176,9 +176,9 @@ namespace tdd_architecture_template_dotnet.Tests.Controllers.Sales
                 Message = "Delete error"
             };
 
-            _saleServiceMock.Setup(s => s.Delete(input)).ReturnsAsync(error);
+            _saleServiceMock.Setup(s => s.Delete(1)).ReturnsAsync(error);
 
-            var result = await _controller.Delete(input);
+            var result = await _controller.Delete(1);
 
             var badRequest = Assert.IsType<BadRequestObjectResult>(result.Result);
             Assert.Equal(error, badRequest.Value);
