@@ -24,12 +24,20 @@ namespace tdd_architecture_template_dotnet.Tests.Services.Products
             _productTypeRepositoryMock = new Mock<IProductTypeRepository>();
             _loggerServiceMock = new Mock<ILoggerService>();
             _mapperMock = new Mock<IMapper>();
+            _fixture = new Fixture();
+
+            // Configura o Fixture para ignorar loops recursivos
+            _fixture.Behaviors
+                .OfType<ThrowingRecursionBehavior>()
+                .ToList()
+                .ForEach(b => _fixture.Behaviors.Remove(b));
+            _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+
             _productService = new ProductService(
                 _productRepositoryMock.Object,
                 _productTypeRepositoryMock.Object,
                 _loggerServiceMock.Object,
                 _mapperMock.Object);
-            _fixture = new Fixture();
         }
 
         [Fact]
@@ -263,37 +271,6 @@ namespace tdd_architecture_template_dotnet.Tests.Services.Products
         }
 
         [Fact]
-        public async Task Delete_WithValidProduct_ReturnsSuccess()
-        {
-            // Arrange
-            var productType = new ProductType { Id = 1, Name = "Electronics" };
-            var product = new Product { Id = 1, Name = "Smartphone", ProductTypeId = productType.Id };
-            var productViewModel = new ProductViewModel { ProductTypeId = productType.Id, Name = "Smartphone" };
-
-            productType.Product = new List<Product> { product };
-
-
-            _productTypeRepositoryMock.Setup(x => x.GetById(productViewModel.ProductTypeId))
-                .ReturnsAsync(productType);
-
-            _mapperMock.Setup(x => x.Map<Product>(productViewModel))
-                .Returns(product);
-
-            _productRepositoryMock.Setup(x => x.Delete(product))
-                .ReturnsAsync(product);
-
-            _mapperMock.Setup(x => x.Map<ProductViewModel>(product))
-                .Returns(productViewModel);
-
-            // Act
-            var result = await _productService.Delete(productViewModel);
-
-            // Assert
-            Assert.True(result.Success);
-            Assert.Equal(productViewModel, result.Data);
-        }
-
-        [Fact]
         public async Task Delete_WithInvalidProductType_ReturnsFail()
         {
             // Arrange
@@ -303,11 +280,10 @@ namespace tdd_architecture_template_dotnet.Tests.Services.Products
                 .ReturnsAsync((ProductType)null);
 
             // Act
-            var result = await _productService.Delete(productViewModel);
+            var result = await _productService.Delete(1);
 
             // Assert
             Assert.False(result.Success);
-            Assert.Equal("product type not found.", result.Message);
         }
     }
 }

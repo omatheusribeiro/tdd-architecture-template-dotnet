@@ -116,9 +116,9 @@ namespace tdd_architecture_template_dotnet.Tests.Controllers.Products
                 Data = input
             };
 
-            _productServiceMock.Setup(s => s.Delete(input)).ReturnsAsync(expected);
+            _productServiceMock.Setup(s => s.Delete(1)).ReturnsAsync(expected);
 
-            var result = await _controller.Delete(input);
+            var result = await _controller.Delete(1);
 
             var okResult = Assert.IsType<OkObjectResult>(result.Result);
             Assert.Equal(expected, okResult.Value);

@@ -9,6 +9,6 @@ namespace tdd_architecture_template_dotnet.Application.Services.Products.Interfa
         Task<Result<ProductViewModel>> GetById(int id);
         Task<Result<ProductViewModel>> Put(ProductViewModel product);
         Task<Result<ProductViewModel>> Post(ProductViewModel product);
-        Task<Result<ProductViewModel>> Delete(ProductViewModel product);
+        Task<Result<ProductViewModel>> Delete(int productId);
     }
 }

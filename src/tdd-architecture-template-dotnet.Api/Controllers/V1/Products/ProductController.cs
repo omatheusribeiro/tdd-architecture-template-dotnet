@@ -67,11 +67,11 @@ namespace tdd_architecture_template_dotnet.Controllers.V1.Products
             return Ok(response);
         }
 
-        [HttpDelete("DeleteProduct")]
+        [HttpDelete("DeleteProduct/{productId:int}")]
         [Authorize]
-        public async Task<ActionResult<ProductViewModel>> Delete([FromBody] ProductViewModel product)
+        public async Task<ActionResult<ProductViewModel>> Delete([FromRoute] int productId)
         {
-            var response = await _productService.Delete(product);
+            var response = await _productService.Delete(productId);
 
             if (response.StatusCode == (int)HttpStatus.BadRequest)
                 return BadRequest(response);

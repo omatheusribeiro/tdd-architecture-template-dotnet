@@ -131,10 +131,18 @@ namespace tdd_architecture_template_dotnet.Application.Services.Products
             }
         }
 
-        public async Task<Result<ProductViewModel>> Delete(ProductViewModel product)
+        public async Task<Result<ProductViewModel>> Delete(int productId)
         {
             try
             {
+                var product = await _productRepository.GetById(productId);
+
+                if (product is null)
+                {
+                    _loggerService.LogInfo("product not found.");
+                    return Result<ProductViewModel>.Fail("product not found.", (int)HttpStatus.BadRequest);
+                }
+
                 var productType = await _productTypeRepository.GetById(product.ProductTypeId);
 
                 if (productType is null)
