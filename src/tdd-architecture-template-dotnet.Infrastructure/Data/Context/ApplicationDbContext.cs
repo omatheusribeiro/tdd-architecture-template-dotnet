@@ -9,7 +9,7 @@ using tdd_architecture_template_dotnet.Infrastructure.Data.EntitiesConfiguration
 
 namespace tdd_architecture_template_dotnet.Infrastructure.Data.Context
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
