@@ -171,9 +171,9 @@ namespace tdd_architecture_template_dotnet.Tests.Controllers.Users
                 Data = user
             };
 
-            _userServiceMock.Setup(s => s.Delete(user)).ReturnsAsync(result);
+            _userServiceMock.Setup(s => s.Delete(1)).ReturnsAsync(result);
 
-            var response = await _controller.Delete(user);
+            var response = await _controller.Delete(1);
 
             var okResult = Assert.IsType<OkObjectResult>(response.Result);
             Assert.Equal(result, okResult.Value);
@@ -189,9 +189,9 @@ namespace tdd_architecture_template_dotnet.Tests.Controllers.Users
                 Message = "Cannot delete"
             };
 
-            _userServiceMock.Setup(s => s.Delete(user)).ReturnsAsync(result);
+            _userServiceMock.Setup(s => s.Delete(1)).ReturnsAsync(result);
 
-            var response = await _controller.Delete(user);
+            var response = await _controller.Delete(1);
 
             var badRequest = Assert.IsType<BadRequestObjectResult>(response.Result);
             Assert.Equal(result, badRequest.Value);

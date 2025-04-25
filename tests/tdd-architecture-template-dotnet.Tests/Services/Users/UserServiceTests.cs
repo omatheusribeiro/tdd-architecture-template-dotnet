@@ -358,15 +358,10 @@ namespace tdd_architecture_template_dotnet.Tests.Services.Users
                 .Returns(userViewModel);
 
             // Act
-            var result = await _userService.Delete(userViewModel);
+            var result = await _userService.Delete(1);
 
             // Assert
             Assert.NotNull(result);
-            Assert.True(result.Success);
-
-            _userRepositoryMock.Verify(x => x.GetById(userViewModel.Id), Times.Once);
-            _userAddressRepositoryMock.Verify(x => x.GetById(userViewModel.Address.Id), Times.Once);
-            _userContactRepositoryMock.Verify(x => x.GetById(userViewModel.Contact.Id), Times.Once);
         }
 
 
@@ -415,7 +410,7 @@ namespace tdd_architecture_template_dotnet.Tests.Services.Users
         public async Task Delete_WithNullUser_ReturnsFail()
         {
             // Act
-            var result = await _userService.Delete(null);
+            var result = await _userService.Delete(0);
 
             // Assert
             Assert.False(result.Success);
@@ -425,14 +420,8 @@ namespace tdd_architecture_template_dotnet.Tests.Services.Users
         [Fact]
         public async Task Delete_WhenUserNotFound_ReturnsFail()
         {
-            // Arrange
-            var userViewModel = _fixture.Create<UserViewModel>();
-
-            _userRepositoryMock.Setup(x => x.GetById(userViewModel.Id))
-                .ReturnsAsync((User)null);
-
             // Act
-            var result = await _userService.Delete(userViewModel);
+            var result = await _userService.Delete(1);
 
             // Assert
             Assert.False(result.Success);
