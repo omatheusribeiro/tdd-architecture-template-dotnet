@@ -68,6 +68,7 @@ namespace tdd_architecture_template_dotnet.Controllers.V1.Users
         }
 
         [HttpDelete("DeleteUser/{userId:int}")]
+        [Authorize]
         public async Task<ActionResult<UserViewModel>> Delete([FromRoute] int userId)
         {
             var response = await _userService.Delete(userId);
