@@ -38,7 +38,7 @@ namespace tdd_architecture_template_dotnet.Application.Services.Login
                     return Result<string>.Fail("Unable to identify email in the database.", (int)HttpStatus.BadRequest);
                 }
 
-                var token = _tokenGenerator.GenerateToken(result.Email);
+                var token = "Bearer " + _tokenGenerator.GenerateToken(result.Email);
 
                 return Result<string>.Ok(token);
 
