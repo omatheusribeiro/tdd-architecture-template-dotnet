@@ -134,7 +134,7 @@ This application includes:
 - **AutoMapper** 🔄
 - **xUnit (Unit Testing)** 🧪
 - **JWT Authentication** 🔑
-- **Repository & Service Layer Pattern** 📚
+- **Repository, Singleton & Service Layer Pattern** 📚
 
 ## 📄 License
 This project is licensed under the BSD-2 Clause License.
